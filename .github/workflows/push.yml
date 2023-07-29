@@ -1,0 +1,36 @@
+
+name: Ruby
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+  
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler-cache: true
+          working-directory: ./.github/tests
+  
+      - name: Run tests
+        run: ruby ./.github/tests/script_test.rb
+        
+      - name: Build the stack
+        if: success()
+        run: docker-compose up -d
+        
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
+        
+  
