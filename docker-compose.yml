@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  nodejs-server:
+    build:
+      context: ./api
+      dockerfile: Dockerfile-dev
+    ports:
+      - "3080:3080"
+
+  angular-ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile-dev
+    ports:
+      - "4201:4201"
