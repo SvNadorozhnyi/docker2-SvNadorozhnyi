@@ -1,0 +1,11 @@
+FROM node:16
+
+WORKDIR /usr/src/app/app-ui
+
+COPY . ./
+
+RUN npm install
+
+EXPOSE 4201
+
+CMD ["npm", "start"]
